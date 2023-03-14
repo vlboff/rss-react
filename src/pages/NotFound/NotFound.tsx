@@ -1,4 +1,4 @@
-import { ReactComponent as SadFace } from '../assets/sad-face.svg';
+import { ReactComponent as SadFace } from '../../assets/sad-face.svg';
 
 function NotFound() {
   return (
