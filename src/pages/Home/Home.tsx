@@ -1,8 +1,12 @@
+import SearchBar from '../..//components/UI/SearchBar/SearchBar';
+import FieldOfCards from '../../components/FieldOfCards/FieldOfCards';
+
 function Home() {
   return (
-    <div>
-      <h1>Hello World!</h1>
-    </div>
+    <main>
+      <SearchBar />
+      <FieldOfCards />
+    </main>
   );
 }
 
