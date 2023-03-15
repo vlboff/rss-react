@@ -16,7 +16,7 @@ class HeaderButtom extends Component<{
     return (
       <div className={`nav-links ${activeMode === name ? 'active' : ''}`}>
         <Link to={link} onClick={onClick}>
-          {name}
+          <h3>{name}</h3>
         </Link>
       </div>
     );
