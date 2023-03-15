@@ -3,7 +3,7 @@ import HeaderButtom from '../UI/HeaderButtom/HeaderButtom';
 
 class Header extends Component<object, { activeMode: string }> {
   state = {
-    activeMode: '',
+    activeMode: 'Home',
   };
 
   addActive = (name: string) => {
@@ -12,7 +12,7 @@ class Header extends Component<object, { activeMode: string }> {
 
   render(): ReactNode {
     return (
-      <div>
+      <header>
         <HeaderButtom
           name={'Home'}
           link={'/'}
@@ -25,7 +25,7 @@ class Header extends Component<object, { activeMode: string }> {
           onClick={() => this.addActive('About us')}
           activeMode={this.state.activeMode}
         />
-      </div>
+      </header>
     );
   }
 }
