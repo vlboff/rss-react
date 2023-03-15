@@ -4,7 +4,7 @@ import Home from './pages/Home/Home';
 import AboutUs from './pages/AboutUs/AboutUs';
 import NotFound from './pages/NotFound/NotFound';
 
-function App() {
+export function App() {
   return (
     <>
       <Header />
@@ -17,11 +17,10 @@ function App() {
   );
 }
 
-function WrappedApp() {
+export function WrappedApp() {
   return (
     <HashRouter>
       <App />
     </HashRouter>
   );
 }
-export default WrappedApp;
