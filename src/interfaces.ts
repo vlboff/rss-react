@@ -19,3 +19,14 @@ export interface IData {
   skip: number;
   limit: number;
 }
+
+export enum pagePath {
+  home = '#/',
+  about = '#/about',
+}
+
+export enum namePage {
+  home = 'Home',
+  about = 'About us',
+  notFound = '404',
+}

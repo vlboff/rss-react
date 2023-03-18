@@ -1,32 +1,32 @@
 import { Component, ReactNode } from 'react';
 import HeaderButtom from '../UI/HeaderButtom/HeaderButtom';
+import { pagePath, namePage } from '../../interfaces';
 
-enum namePage {
-  home = 'Home',
-  about = 'About us',
-  notFound = '404',
-}
+const pagesPathArray = [pagePath.home, pagePath.about];
+const pagesArray = [
+  { name: namePage.home, link: '/' },
+  { name: namePage.about, link: '/about' },
+];
 
 class Header extends Component<{ path: string }, { activeMode: string }> {
   constructor(props: { path: string }) {
     super(props);
     this.state = {
-      activeMode: localStorage.getItem('pageName') || namePage.home,
+      activeMode: sessionStorage.getItem('pageName') || namePage.home,
     };
   }
 
   addActive = (name: string) => {
-    localStorage.setItem('pageName', name);
+    sessionStorage.setItem('pageName', name);
     this.setState({ activeMode: name });
   };
 
   pageName = (name: string) => {
+    const path = this.props.path;
     if (name === namePage.home) {
-      return this.props.path !== '#/' && this.props.path !== '#/about'
-        ? namePage.notFound
-        : namePage.home;
+      return path && pagesPathArray.every((i) => i !== path) ? namePage.notFound : namePage.home;
     } else if (name === namePage.about) {
-      return this.props.path !== '#/' && this.props.path !== '#/about'
+      return path && path !== pagePath.home && path !== pagePath.about
         ? namePage.notFound
         : namePage.about;
     }
@@ -37,18 +37,15 @@ class Header extends Component<{ path: string }, { activeMode: string }> {
       <header>
         <h1>Page name: {this.pageName(this.state.activeMode)}</h1>
         <nav>
-          <HeaderButtom
-            name={namePage.home}
-            link={'/'}
-            onClick={() => this.addActive(namePage.home)}
-            activeMode={this.state.activeMode}
-          />
-          <HeaderButtom
-            name={namePage.about}
-            link={'/about'}
-            onClick={() => this.addActive(namePage.about)}
-            activeMode={this.state.activeMode}
-          />
+          {pagesArray.map((item) => (
+            <HeaderButtom
+              key={item.name}
+              name={item.name}
+              link={item.link}
+              onClick={() => this.addActive(item.name)}
+              activeMode={this.state.activeMode}
+            />
+          ))}
         </nav>
       </header>
     );

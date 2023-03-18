@@ -7,11 +7,11 @@ import { Component } from 'react';
 
 export class App extends Component<object, { path: string }> {
   state = {
-    path: localStorage.getItem('pagePath') || '#/',
+    path: sessionStorage.getItem('pagePath') || '#/',
   };
 
   setPath = () => {
-    localStorage.setItem('pagePath', location.hash);
+    sessionStorage.setItem('pagePath', location.hash);
     this.setState({ path: location.hash });
   };
 
