@@ -1,0 +1,6 @@
+.field-of-cards {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
+  padding: 20px 0;
+}
