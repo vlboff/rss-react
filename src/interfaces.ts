@@ -23,10 +23,12 @@ export interface IData {
 export enum pagePath {
   home = '#/',
   about = '#/about',
+  forms = '#/forms',
 }
 
 export enum namePage {
   home = 'Home',
   about = 'About us',
+  forms = 'Forms',
   notFound = '404',
 }

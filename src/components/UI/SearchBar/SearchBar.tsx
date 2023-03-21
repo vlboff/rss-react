@@ -19,7 +19,7 @@ class SearchBar extends Component {
         <label>
           <Magnifier />
           <input
-            type="text"
+            type="search"
             placeholder="Search on the page"
             value={this.state.searchValue}
             onChange={this.onValueChange}

@@ -2,10 +2,11 @@ import { Component, ReactNode } from 'react';
 import HeaderButtom from '../UI/HeaderButtom/HeaderButtom';
 import { pagePath, namePage } from '../../interfaces';
 
-const pagesPathArray = [pagePath.home, pagePath.about];
+const pagesPathArray = [pagePath.home, pagePath.about, pagePath.forms];
 const pagesArray = [
   { name: namePage.home, link: '/' },
   { name: namePage.about, link: '/about' },
+  { name: namePage.forms, link: '/forms' },
 ];
 
 class Header extends Component<{ path: string }, { activeMode: string }> {
@@ -23,12 +24,9 @@ class Header extends Component<{ path: string }, { activeMode: string }> {
 
   pageName = (name: string) => {
     const path = this.props.path;
-    if (name === namePage.home) {
-      return path && pagesPathArray.every((i) => i !== path) ? namePage.notFound : namePage.home;
-    } else if (name === namePage.about) {
-      return path && path !== pagePath.home && path !== pagePath.about
-        ? namePage.notFound
-        : namePage.about;
+    const currentPage = pagesArray.find((item) => item.name === name);
+    if (currentPage?.name) {
+      return path && pagesPathArray.every((i) => i !== path) ? namePage.notFound : currentPage.name;
     }
   };
 
