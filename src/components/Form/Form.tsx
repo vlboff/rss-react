@@ -25,7 +25,6 @@ class Form extends Component<IForm> {
             inputRadioInProductionRef={this.props.inputRadioInProductionRef}
             inputRadioPostProductionRef={this.props.inputRadioPostProductionRef}
             inputRadioReleasedRef={this.props.inputRadioReleasedRef}
-            inputRadioCanceledRef={this.props.inputRadioCanceledRef}
           ></RadioField>
           <InputAdult inputAdultRef={this.props.inputAdultRef}></InputAdult>
         </div>

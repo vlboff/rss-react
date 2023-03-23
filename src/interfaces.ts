@@ -39,7 +39,6 @@ export enum radioButton {
   inProduction = 'In Production',
   postProduction = 'Post Production',
   released = 'Released',
-  canceled = 'Canceled',
 }
 
 export interface IRadioField {
@@ -48,7 +47,6 @@ export interface IRadioField {
   inputRadioInProductionRef: React.RefObject<HTMLInputElement>;
   inputRadioPostProductionRef: React.RefObject<HTMLInputElement>;
   inputRadioReleasedRef: React.RefObject<HTMLInputElement>;
-  inputRadioCanceledRef: React.RefObject<HTMLInputElement>;
 }
 
 export interface IForm {
@@ -62,6 +60,14 @@ export interface IForm {
   inputRadioInProductionRef: React.RefObject<HTMLInputElement>;
   inputRadioPostProductionRef: React.RefObject<HTMLInputElement>;
   inputRadioReleasedRef: React.RefObject<HTMLInputElement>;
-  inputRadioCanceledRef: React.RefObject<HTMLInputElement>;
   inputAdultRef: React.RefObject<HTMLInputElement>;
+}
+
+export interface ICardState {
+  title: string | null;
+  date: string | null;
+  ganre: string | null;
+  image: string | null;
+  status: boolean[];
+  adult: boolean;
 }

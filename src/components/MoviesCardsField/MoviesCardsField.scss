@@ -1,0 +1,6 @@
+.movies-cards {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(6,minmax(210px,1fr));
+  padding: 20px 0;
+}

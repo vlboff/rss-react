@@ -9,7 +9,6 @@ class RadioField extends Component<IRadioField> {
     { name: radioButton.inProduction, ref: this.props.inputRadioInProductionRef },
     { name: radioButton.postProduction, ref: this.props.inputRadioPostProductionRef },
     { name: radioButton.released, ref: this.props.inputRadioReleasedRef },
-    { name: radioButton.canceled, ref: this.props.inputRadioCanceledRef },
   ];
   constructor(props: IRadioField) {
     super(props);
@@ -21,7 +20,11 @@ class RadioField extends Component<IRadioField> {
         <p>Status:</p>
         <div className="input-form-radio">
           {this.radioButtonArr.map((item) => (
-            <InputRadio key={item.name} inputRadioRef={item.ref} name={item.name}></InputRadio>
+            <InputRadio
+              key={`${item.name}${Math.random()}`}
+              inputRadioRef={item.ref}
+              name={item.name}
+            ></InputRadio>
           ))}
         </div>
       </div>

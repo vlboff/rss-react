@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Form from '../../components/Form/Form';
+import MoviesCardsField from '../../components/MoviesCardsField/MoviesCardsField';
+import { ICardState } from '../../interfaces';
 
 class Forms extends Component<{ setPath: () => void }> {
   inputTitleRef: React.RefObject<HTMLInputElement>;
@@ -11,7 +13,6 @@ class Forms extends Component<{ setPath: () => void }> {
   inputRadioInProductionRef: React.RefObject<HTMLInputElement>;
   inputRadioPostProductionRef: React.RefObject<HTMLInputElement>;
   inputRadioReleasedRef: React.RefObject<HTMLInputElement>;
-  inputRadioCanceledRef: React.RefObject<HTMLInputElement>;
   inputAdultRef: React.RefObject<HTMLInputElement>;
   constructor(props: { setPath: () => void }) {
     super(props);
@@ -25,8 +26,16 @@ class Forms extends Component<{ setPath: () => void }> {
     this.inputRadioInProductionRef = React.createRef<HTMLInputElement>();
     this.inputRadioPostProductionRef = React.createRef<HTMLInputElement>();
     this.inputRadioReleasedRef = React.createRef<HTMLInputElement>();
-    this.inputRadioCanceledRef = React.createRef<HTMLInputElement>();
     this.inputAdultRef = React.createRef<HTMLInputElement>();
+    this.state = {
+      title: null,
+      date: null,
+      ganre: null,
+      image: null,
+      status: [false, false, false, false, false],
+      adult: false,
+      cardsArray: [],
+    };
   }
 
   componentDidMount() {
@@ -35,15 +44,24 @@ class Forms extends Component<{ setPath: () => void }> {
   }
 
   handleSubmit(event: { preventDefault: () => void }) {
-    console.log(this.inputTitleRef.current?.value);
-    console.log(this.inputDateRef.current?.value);
-    console.log(this.inputSelectRef.current?.value);
-    console.log(this.inputPosterRef.current?.files ? this.inputPosterRef.current?.files[0] : null);
-    console.log([
-      this.inputRadioRumoredRef.current?.checked,
-      this.inputRadioCanceledRef.current?.checked,
-    ]);
-    console.log(this.inputAdultRef.current?.checked);
+    this.setState({
+      title: this.inputTitleRef.current?.value,
+      date: this.inputDateRef.current?.value,
+      ganre: this.inputSelectRef.current?.value,
+      image: this.inputPosterRef.current?.value
+        ? this.inputPosterRef.current?.files
+          ? URL.createObjectURL(this.inputPosterRef.current?.files[0])
+          : null
+        : null,
+      status: [
+        this.inputRadioRumoredRef.current,
+        this.inputRadioPlannedRef.current,
+        this.inputRadioInProductionRef.current,
+        this.inputRadioPostProductionRef.current,
+        this.inputRadioReleasedRef.current,
+      ].find((item) => item?.checked)?.value,
+      adult: this.inputAdultRef.current?.checked,
+    });
     event.preventDefault();
   }
 
@@ -61,9 +79,9 @@ class Forms extends Component<{ setPath: () => void }> {
           inputRadioInProductionRef={this.inputRadioInProductionRef}
           inputRadioPostProductionRef={this.inputRadioPostProductionRef}
           inputRadioReleasedRef={this.inputRadioReleasedRef}
-          inputRadioCanceledRef={this.inputRadioCanceledRef}
           inputAdultRef={this.inputAdultRef}
         ></Form>
+        <MoviesCardsField cardState={this.state as ICardState}></MoviesCardsField>
       </main>
     );
   }
