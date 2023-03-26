@@ -81,3 +81,15 @@ export interface ICardState {
     invalidStatus: string;
   };
 }
+
+export interface Ivalidation {
+  inputTitleRef: React.RefObject<HTMLInputElement>;
+  inputDateRef: React.RefObject<HTMLInputElement>;
+  inputSelectRef: React.RefObject<HTMLSelectElement>;
+  inputPosterRef: React.RefObject<HTMLInputElement>;
+  inputRadioRumoredRef: React.RefObject<HTMLInputElement>;
+  inputRadioPlannedRef: React.RefObject<HTMLInputElement>;
+  inputRadioInProductionRef: React.RefObject<HTMLInputElement>;
+  inputRadioPostProductionRef: React.RefObject<HTMLInputElement>;
+  inputRadioReleasedRef: React.RefObject<HTMLInputElement>;
+}

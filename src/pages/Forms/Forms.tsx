@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Form from '../../components/Form/Form';
 import MoviesCardsField from '../../components/MoviesCardsField/MoviesCardsField';
+import { validation } from '../../utils/utils';
 import { ICardState } from '../../interfaces';
 
 class Forms extends Component<{ setPath: () => void }, ICardState> {
@@ -69,25 +70,17 @@ class Forms extends Component<{ setPath: () => void }, ICardState> {
         this.inputRadioReleasedRef.current,
       ].find((item) => item?.checked)?.value,
       adult: this.inputAdultRef.current?.checked,
-      errors: {
-        invalidTitle: this.inputTitleRef.current?.value ? '' : 'active',
-        invalidGanre: this.inputSelectRef.current?.value ? '' : 'active',
-        invalidDate: this.inputDateRef.current?.value
-          ? Number(this.inputDateRef.current?.value.slice(0, 4)) > 1895
-            ? ''
-            : 'active'
-          : 'active',
-        invalidPoster: this.inputPosterRef.current?.value ? '' : 'active',
-        invalidStatus: [
-          this.inputRadioRumoredRef.current,
-          this.inputRadioPlannedRef.current,
-          this.inputRadioInProductionRef.current,
-          this.inputRadioPostProductionRef.current,
-          this.inputRadioReleasedRef.current,
-        ].find((item) => item?.checked)?.value
-          ? ''
-          : 'active',
-      },
+      errors: validation({
+        inputTitleRef: this.inputTitleRef,
+        inputDateRef: this.inputDateRef,
+        inputSelectRef: this.inputSelectRef,
+        inputPosterRef: this.inputPosterRef,
+        inputRadioRumoredRef: this.inputRadioRumoredRef,
+        inputRadioPlannedRef: this.inputRadioPlannedRef,
+        inputRadioInProductionRef: this.inputRadioInProductionRef,
+        inputRadioPostProductionRef: this.inputRadioPostProductionRef,
+        inputRadioReleasedRef: this.inputRadioReleasedRef,
+      }),
     });
     this.formRef.current?.reset();
   }
