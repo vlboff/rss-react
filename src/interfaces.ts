@@ -47,10 +47,12 @@ export interface IRadioField {
   inputRadioInProductionRef: React.RefObject<HTMLInputElement>;
   inputRadioPostProductionRef: React.RefObject<HTMLInputElement>;
   inputRadioReleasedRef: React.RefObject<HTMLInputElement>;
+  invalidStatus: string;
 }
 
 export interface IForm {
-  onSubmit: (event: { preventDefault: () => void }) => void;
+  formRef: React.RefObject<HTMLFormElement>;
+  onSubmit: () => void;
   inputTitleRef: React.RefObject<HTMLInputElement>;
   inputDateRef: React.RefObject<HTMLInputElement>;
   inputSelectRef: React.RefObject<HTMLSelectElement>;
@@ -61,13 +63,21 @@ export interface IForm {
   inputRadioPostProductionRef: React.RefObject<HTMLInputElement>;
   inputRadioReleasedRef: React.RefObject<HTMLInputElement>;
   inputAdultRef: React.RefObject<HTMLInputElement>;
+  cardState: ICardState;
 }
 
 export interface ICardState {
-  title: string | null;
-  date: string | null;
-  ganre: string | null;
+  title: string | null | undefined;
+  date: string | null | undefined;
+  ganre: string | null | undefined;
   image: string | null;
-  status: boolean[];
-  adult: boolean;
+  status: string | null | undefined;
+  adult: boolean | undefined;
+  errors: {
+    invalidTitle: string;
+    invalidGanre: string;
+    invalidDate: string;
+    invalidPoster: string;
+    invalidStatus: string;
+  };
 }

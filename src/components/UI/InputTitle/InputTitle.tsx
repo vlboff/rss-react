@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 
-class InputTitle extends Component<{ inputTitleRef: React.RefObject<HTMLInputElement> }> {
-  constructor(props: { inputTitleRef: React.RefObject<HTMLInputElement> }) {
+class InputTitle extends Component<{
+  inputTitleRef: React.RefObject<HTMLInputElement>;
+  invalidTitle: string;
+}> {
+  constructor(props: { inputTitleRef: React.RefObject<HTMLInputElement>; invalidTitle: string }) {
     super(props);
   }
 
@@ -17,6 +20,7 @@ class InputTitle extends Component<{ inputTitleRef: React.RefObject<HTMLInputEle
             placeholder="movie title"
           />
         </label>
+        <p className={`invalid-form-text ${this.props.invalidTitle}`}>*add title</p>
       </div>
     );
   }

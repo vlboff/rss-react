@@ -6,7 +6,6 @@ class MoviesCardsField extends Component<
   { cardState: Readonly<ICardState> },
   { cardArr: ICardState[] }
 > {
-  // cardArr: ICardState[] = [];
   constructor(props: { cardState: Readonly<ICardState> }) {
     super(props);
     this.state = {
@@ -16,10 +15,9 @@ class MoviesCardsField extends Component<
 
   componentDidUpdate(prevProps: { cardState: Readonly<ICardState> }) {
     if (this.props.cardState !== prevProps.cardState) {
-      this.setState({ cardArr: [...this.state.cardArr, this.props.cardState] });
-      // this.cardArr.push(this.props.cardState);
-      // console.log(this.state.cardArr);
-      // this.forceUpdate();
+      if (Object.values(this.props.cardState.errors).every((item) => item === '')) {
+        this.setState({ cardArr: [...this.state.cardArr, this.props.cardState] });
+      }
     }
   }
 

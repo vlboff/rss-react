@@ -27,6 +27,7 @@ class RadioField extends Component<IRadioField> {
             ></InputRadio>
           ))}
         </div>
+        <p className={`invalid-form-text ${this.props.invalidStatus}`}>*choose status</p>
       </div>
     );
   }

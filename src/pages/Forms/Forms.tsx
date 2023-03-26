@@ -3,7 +3,7 @@ import Form from '../../components/Form/Form';
 import MoviesCardsField from '../../components/MoviesCardsField/MoviesCardsField';
 import { ICardState } from '../../interfaces';
 
-class Forms extends Component<{ setPath: () => void }> {
+class Forms extends Component<{ setPath: () => void }, ICardState> {
   inputTitleRef: React.RefObject<HTMLInputElement>;
   inputDateRef: React.RefObject<HTMLInputElement>;
   inputSelectRef: React.RefObject<HTMLSelectElement>;
@@ -14,6 +14,7 @@ class Forms extends Component<{ setPath: () => void }> {
   inputRadioPostProductionRef: React.RefObject<HTMLInputElement>;
   inputRadioReleasedRef: React.RefObject<HTMLInputElement>;
   inputAdultRef: React.RefObject<HTMLInputElement>;
+  formRef: React.RefObject<HTMLFormElement>;
   constructor(props: { setPath: () => void }) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,14 +28,21 @@ class Forms extends Component<{ setPath: () => void }> {
     this.inputRadioPostProductionRef = React.createRef<HTMLInputElement>();
     this.inputRadioReleasedRef = React.createRef<HTMLInputElement>();
     this.inputAdultRef = React.createRef<HTMLInputElement>();
+    this.formRef = React.createRef<HTMLFormElement>();
     this.state = {
       title: null,
       date: null,
       ganre: null,
       image: null,
-      status: [false, false, false, false, false],
+      status: null,
       adult: false,
-      cardsArray: [],
+      errors: {
+        invalidTitle: '',
+        invalidGanre: '',
+        invalidDate: '',
+        invalidPoster: '',
+        invalidStatus: '',
+      },
     };
   }
 
@@ -43,7 +51,7 @@ class Forms extends Component<{ setPath: () => void }> {
     this.inputTitleRef.current?.focus();
   }
 
-  handleSubmit(event: { preventDefault: () => void }) {
+  handleSubmit() {
     this.setState({
       title: this.inputTitleRef.current?.value,
       date: this.inputDateRef.current?.value,
@@ -61,15 +69,27 @@ class Forms extends Component<{ setPath: () => void }> {
         this.inputRadioReleasedRef.current,
       ].find((item) => item?.checked)?.value,
       adult: this.inputAdultRef.current?.checked,
+      errors: {
+        invalidTitle: this.inputTitleRef.current?.value ? '' : 'active',
+        invalidGanre: this.inputSelectRef.current?.value ? '' : 'active',
+        invalidDate: this.inputDateRef.current?.value
+          ? Number(this.inputDateRef.current?.value.slice(0, 4)) > 1895
+            ? ''
+            : 'active'
+          : 'active',
+        invalidPoster: this.inputPosterRef.current?.value ? '' : 'active',
+        invalidStatus: this.state.status ? '' : 'active',
+      },
     });
-    event.preventDefault();
+    this.formRef.current?.reset();
   }
 
   render() {
     return (
       <main>
         <Form
-          onSubmit={(event: { preventDefault: () => void }) => this.handleSubmit(event)}
+          formRef={this.formRef}
+          onSubmit={() => this.handleSubmit()}
           inputTitleRef={this.inputTitleRef}
           inputDateRef={this.inputDateRef}
           inputSelectRef={this.inputSelectRef}
@@ -80,8 +100,9 @@ class Forms extends Component<{ setPath: () => void }> {
           inputRadioPostProductionRef={this.inputRadioPostProductionRef}
           inputRadioReleasedRef={this.inputRadioReleasedRef}
           inputAdultRef={this.inputAdultRef}
+          cardState={this.state}
         ></Form>
-        <MoviesCardsField cardState={this.state as ICardState}></MoviesCardsField>
+        <MoviesCardsField cardState={this.state}></MoviesCardsField>
       </main>
     );
   }

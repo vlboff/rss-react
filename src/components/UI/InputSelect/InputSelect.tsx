@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 
-class InputSelect extends Component<{ inputSelectRef: React.RefObject<HTMLSelectElement> }> {
-  constructor(props: { inputSelectRef: React.RefObject<HTMLSelectElement> }) {
+class InputSelect extends Component<{
+  inputSelectRef: React.RefObject<HTMLSelectElement>;
+  invalidGanre: string;
+}> {
+  constructor(props: { inputSelectRef: React.RefObject<HTMLSelectElement>; invalidGanre: string }) {
     super(props);
   }
 
@@ -26,6 +29,7 @@ class InputSelect extends Component<{ inputSelectRef: React.RefObject<HTMLSelect
             <option value="Mystery">Western</option>
           </select>
         </label>
+        <p className={`invalid-form-text ${this.props.invalidGanre}`}>*choose one genre</p>
       </div>
     );
   }
