@@ -78,7 +78,15 @@ class Forms extends Component<{ setPath: () => void }, ICardState> {
             : 'active'
           : 'active',
         invalidPoster: this.inputPosterRef.current?.value ? '' : 'active',
-        invalidStatus: this.state.status ? '' : 'active',
+        invalidStatus: [
+          this.inputRadioRumoredRef.current,
+          this.inputRadioPlannedRef.current,
+          this.inputRadioInProductionRef.current,
+          this.inputRadioPostProductionRef.current,
+          this.inputRadioReleasedRef.current,
+        ].find((item) => item?.checked)?.value
+          ? ''
+          : 'active',
       },
     });
     this.formRef.current?.reset();
