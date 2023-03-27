@@ -1,0 +1,126 @@
+form {
+  display: flex;
+  flex-direction: column;
+  color: var(--font_color_main);
+
+  .inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(210px,1fr));
+    gap: 20px;
+
+    .input-form {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        display: flex;
+        flex-direction: column;
+        max-width: 200px;
+        gap: 5px;
+        font-size: 1.2rem;
+
+        input {
+          padding: 5px;
+          height: 30px;
+          background-color: #ffffff;
+          font-size: 1rem;
+          border: solid 1px;
+        }
+      }
+
+      .input-poster {
+        input {
+          display: none;
+        }
+
+        div {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          max-width: 200px;
+          height: 30px;
+          font-size: 1rem;
+          border: solid 1px;
+          background-color: #ffffff;
+          cursor: pointer;
+        }
+
+        div:active {
+          transform: scale(0.95);
+        }
+      }
+
+      p {
+        font-size: 1.2rem;
+      }
+
+      .invalid-form-text {
+        margin-top: 10px;
+        visibility: hidden;
+        color: var(--font_color_active);
+
+        .small-font {
+          font-size: 0.75rem;
+        }
+      }
+
+      .active {
+        visibility: visible;
+      }
+
+      &-radio {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-top: 5px;
+
+        label {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+
+          input {
+            height: 22px;
+          }
+        }
+      }
+
+      .input-select {
+        font-size: 1.2rem;
+
+        select {
+          height: 30px;
+          background-color: #ffffff;
+          font-size: 1rem;
+        }
+      }
+
+      .input-adult {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+
+        input {
+          height: 22px;
+        }
+      }
+    }
+  }
+
+  .submit {
+    margin: 20px 0;
+    input {
+      width: 100px;
+      height: 30px;
+      font-size: 1rem;
+      color: #ffffff;
+      border: none;
+      background-color: var(--font_color_active);
+      cursor: pointer;
+    }
+
+    input:active {
+      transform: scale(0.95);
+    }
+  }
+}
