@@ -11,4 +11,22 @@ describe('App', () => {
     );
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Page not found');
   });
+
+  it('Renders "Forms" page', () => {
+    render(
+      <MemoryRouter initialEntries={['/forms']}>
+        <App />
+      </MemoryRouter>
+    );
+    expect(screen.getByLabelText('Title:')).toBeInTheDocument();
+  });
+
+  it('Renders "About us" page', () => {
+    render(
+      <MemoryRouter initialEntries={['/about']}>
+        <App />
+      </MemoryRouter>
+    );
+    expect(screen.getByTestId('about-us')).toBeInTheDocument();
+  });
 });
