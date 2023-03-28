@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import { useState } from 'react';
 import HeaderButtom from '../UI/HeaderButtom/HeaderButtom';
 import { pagePath, namePage } from '../../interfaces';
 
@@ -9,45 +9,38 @@ const pagesArray = [
   { name: namePage.forms, link: '/forms' },
 ];
 
-class Header extends Component<{ path: string }, { activeMode: string }> {
-  constructor(props: { path: string }) {
-    super(props);
-    this.state = {
-      activeMode: sessionStorage.getItem('pageName') || namePage.home,
-    };
-  }
+function Header(props: { path: string }) {
+  const [activeMode, setActiveMode] = useState(sessionStorage.getItem('pageName') || namePage.home);
 
-  addActive = (name: string) => {
+  const addActive = (name: string) => {
     sessionStorage.setItem('pageName', name);
-    this.setState({ activeMode: name });
+    setActiveMode(name);
   };
 
-  pageName = (name: string) => {
-    const path = this.props.path;
+  const pageName = (name: string) => {
+    const path = props.path;
     const currentPage = pagesArray.find((item) => item.name === name);
     if (currentPage?.name) {
       return path && pagesPathArray.every((i) => i !== path) ? namePage.notFound : currentPage.name;
     }
   };
 
-  render(): ReactNode {
-    return (
-      <header>
-        <h1>Page name: {this.pageName(this.state.activeMode)}</h1>
-        <nav>
-          {pagesArray.map((item) => (
-            <HeaderButtom
-              key={item.name}
-              name={item.name}
-              link={item.link}
-              onClick={() => this.addActive(item.name)}
-              activeMode={this.state.activeMode}
-            />
-          ))}
-        </nav>
-      </header>
-    );
-  }
+  return (
+    <header>
+      <h1>Page name: {pageName(activeMode)}</h1>
+      <nav>
+        {pagesArray.map((item) => (
+          <HeaderButtom
+            key={item.name}
+            name={item.name}
+            link={item.link}
+            onClick={() => addActive(item.name)}
+            activeMode={activeMode}
+          />
+        ))}
+      </nav>
+    </header>
+  );
 }
 
 export default Header;

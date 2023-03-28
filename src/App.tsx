@@ -4,31 +4,27 @@ import Home from './pages/Home/Home';
 import AboutUs from './pages/AboutUs/AboutUs';
 import Forms from './pages/Forms/Forms';
 import NotFound from './pages/NotFound/NotFound';
-import { Component } from 'react';
+import { useState } from 'react';
 
-export class App extends Component<object, { path: string }> {
-  state = {
-    path: sessionStorage.getItem('pagePath') || '#/',
-  };
+export function App() {
+  const [currentPath, setCurrentPath] = useState(sessionStorage.getItem('pagePath') || '#/');
 
-  setPath = () => {
+  const setPath = () => {
     sessionStorage.setItem('pagePath', location.hash);
-    this.setState({ path: location.hash });
+    setCurrentPath(location.hash);
   };
 
-  render() {
-    return (
-      <>
-        <Header path={this.state.path} />
-        <Routes>
-          <Route path="/" element={<Home setPath={() => this.setPath()} />} />
-          <Route path="/about" element={<AboutUs setPath={() => this.setPath()} />} />
-          <Route path="/forms" element={<Forms setPath={() => this.setPath()} />} />
-          <Route path="*" element={<NotFound setPath={() => this.setPath()} />} />
-        </Routes>
-      </>
-    );
-  }
+  return (
+    <>
+      <Header path={currentPath} />
+      <Routes>
+        <Route path="/" element={<Home setPath={() => setPath()} />} />
+        <Route path="/about" element={<AboutUs setPath={() => setPath()} />} />
+        <Route path="/forms" element={<Forms setPath={() => setPath()} />} />
+        <Route path="*" element={<NotFound setPath={() => setPath()} />} />
+      </Routes>
+    </>
+  );
 }
 
 export function WrappedApp() {
