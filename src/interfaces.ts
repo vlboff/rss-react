@@ -51,19 +51,12 @@ export interface IRadioField {
 }
 
 export interface IForm {
-  formRef: React.RefObject<HTMLFormElement>;
-  onSubmit: () => void;
-  inputTitleRef: React.RefObject<HTMLInputElement>;
-  inputDateRef: React.RefObject<HTMLInputElement>;
-  inputSelectRef: React.RefObject<HTMLSelectElement>;
-  inputPosterRef: React.RefObject<HTMLInputElement>;
-  inputRadioRumoredRef: React.RefObject<HTMLInputElement>;
-  inputRadioPlannedRef: React.RefObject<HTMLInputElement>;
-  inputRadioInProductionRef: React.RefObject<HTMLInputElement>;
-  inputRadioPostProductionRef: React.RefObject<HTMLInputElement>;
-  inputRadioReleasedRef: React.RefObject<HTMLInputElement>;
-  inputAdultRef: React.RefObject<HTMLInputElement>;
-  cardState: ICardState;
+  title: string | null | undefined;
+  date: string | null | undefined;
+  ganre: string | null | undefined;
+  image: string | null;
+  status: string | null | undefined;
+  adult: boolean | undefined;
 }
 
 export interface ICardState {

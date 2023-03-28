@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import InputTitle from '../UI/InputTitle/InputTitle';
 import InputDate from '../UI/InputDate/InputDate';
 import InputSelect from '../UI/InputSelect/InputSelect';
@@ -6,55 +6,39 @@ import InputPoster from '../UI/InputPoster/InputPoster';
 import RadioField from '../RadioField/RadioField';
 import InputAdult from '../UI/InputAdult/InputAdult';
 import { IForm } from '../../interfaces';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
-class Form extends Component<IForm> {
-  constructor(props: IForm) {
-    super(props);
-  }
+function Form(props: { setFormData: React.Dispatch<React.SetStateAction<object>> }) {
+  const [data, setData] = useState({});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IForm>();
 
-  submit(event: React.MouseEvent<HTMLInputElement>) {
-    event.preventDefault();
-    this.props.onSubmit();
-  }
+  const onSubmit: SubmitHandler<IForm> = (data) => setData(data);
 
-  render() {
-    return (
-      <form ref={this.props.formRef}>
-        <div className="inputs">
-          <InputTitle
-            inputTitleRef={this.props.inputTitleRef}
-            invalidTitle={this.props.cardState.errors.invalidTitle}
-          ></InputTitle>
-          <InputPoster
-            inputPosterRef={this.props.inputPosterRef}
-            invalidPoster={this.props.cardState.errors.invalidPoster}
-          ></InputPoster>
-          <InputSelect
-            inputSelectRef={this.props.inputSelectRef}
-            invalidGanre={this.props.cardState.errors.invalidGanre}
-          ></InputSelect>
-          <InputDate
-            inputDateRef={this.props.inputDateRef}
-            invalidDate={this.props.cardState.errors.invalidDate}
-          ></InputDate>
-          <RadioField
-            inputRadioRumoredRef={this.props.inputRadioRumoredRef}
-            inputRadioPlannedRef={this.props.inputRadioPlannedRef}
-            inputRadioInProductionRef={this.props.inputRadioInProductionRef}
-            inputRadioPostProductionRef={this.props.inputRadioPostProductionRef}
-            inputRadioReleasedRef={this.props.inputRadioReleasedRef}
-            invalidStatus={this.props.cardState.errors.invalidStatus}
-          ></RadioField>
-          <InputAdult inputAdultRef={this.props.inputAdultRef}></InputAdult>
-        </div>
-        <div className="submit">
-          <label htmlFor="input-submit">
-            <input type="submit" value="submit" onClick={(event) => this.submit(event)} />
-          </label>
-        </div>
-      </form>
-    );
-  }
+  useEffect(() => {
+    props.setFormData(data);
+  }, [data]);
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="inputs">
+        <InputTitle register={register} errors={errors}></InputTitle>
+        <InputPoster></InputPoster>
+        <InputSelect></InputSelect>
+        <InputDate></InputDate>
+        <RadioField></RadioField>
+        <InputAdult></InputAdult>
+      </div>
+      <div className="submit">
+        <label htmlFor="input-submit">
+          <input type="submit" value="submit" />
+        </label>
+      </div>
+    </form>
+  );
 }
 
 export default Form;

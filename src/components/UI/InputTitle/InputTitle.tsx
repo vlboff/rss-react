@@ -1,29 +1,21 @@
-import React, { Component } from 'react';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { IForm } from '../../../interfaces';
 
-class InputTitle extends Component<{
-  inputTitleRef: React.RefObject<HTMLInputElement>;
-  invalidTitle: string;
-}> {
-  constructor(props: { inputTitleRef: React.RefObject<HTMLInputElement>; invalidTitle: string }) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div className="input-form">
-        <label htmlFor="input-title">
-          Title:
-          <input
-            ref={this.props.inputTitleRef}
-            type="text"
-            id="input-title"
-            placeholder="movie title"
-          />
-        </label>
-        <p className={`invalid-form-text ${this.props.invalidTitle}`}>*add title</p>
-      </div>
-    );
-  }
+function InputTitle(props: { register: UseFormRegister<IForm>; errors: FieldErrors<IForm> }) {
+  return (
+    <div className="input-form">
+      <label htmlFor="input-title">
+        Title:
+        <input
+          type="text"
+          id="input-title"
+          placeholder="movie title"
+          {...props.register('title', { required: true })}
+        />
+      </label>
+      <p className={`invalid-form-text ${props.errors.title ? 'active' : ''}`}>*add title</p>
+    </div>
+  );
 }
 
 export default InputTitle;
