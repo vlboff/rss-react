@@ -1,24 +1,18 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 import SearchBar from '../..//components/UI/SearchBar/SearchBar';
 import FieldOfCards from '../../components/FieldOfCards/FieldOfCards';
 
-class Home extends Component<{ setPath: () => void }> {
-  constructor(props: { setPath: () => void }) {
-    super(props);
-  }
+function Home(props: { setPath: () => void }) {
+  useEffect(() => {
+    props.setPath();
+  }, []);
 
-  componentDidMount() {
-    this.props.setPath();
-  }
-
-  render() {
-    return (
-      <main>
-        <SearchBar />
-        <FieldOfCards />
-      </main>
-    );
-  }
+  return (
+    <main>
+      <SearchBar />
+      <FieldOfCards />
+    </main>
+  );
 }
 
 export default Home;
