@@ -5,18 +5,22 @@ import InputSelect from '../UI/InputSelect/InputSelect';
 import InputPoster from '../UI/InputPoster/InputPoster';
 import RadioField from '../RadioField/RadioField';
 import InputAdult from '../UI/InputAdult/InputAdult';
-import { IForm } from '../../interfaces';
+import { emptyFormState, IForm } from '../../interfaces';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-function Form(props: { setFormData: React.Dispatch<React.SetStateAction<object>> }) {
-  const [data, setData] = useState({});
+function Form(props: { setFormData: React.Dispatch<React.SetStateAction<IForm>> }) {
+  const [data, setData] = useState<IForm>(emptyFormState);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<IForm>();
 
-  const onSubmit: SubmitHandler<IForm> = (data) => setData(data);
+  const onSubmit: SubmitHandler<IForm> = (data) => {
+    setData(data);
+    // reset();
+  };
 
   useEffect(() => {
     props.setFormData(data);
@@ -26,11 +30,11 @@ function Form(props: { setFormData: React.Dispatch<React.SetStateAction<object>>
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="inputs">
         <InputTitle register={register} errors={errors}></InputTitle>
-        <InputPoster></InputPoster>
-        <InputSelect></InputSelect>
-        <InputDate></InputDate>
-        <RadioField></RadioField>
-        <InputAdult></InputAdult>
+        <InputPoster register={register} errors={errors}></InputPoster>
+        <InputSelect register={register} errors={errors}></InputSelect>
+        <InputDate register={register} errors={errors}></InputDate>
+        <RadioField register={register} errors={errors}></RadioField>
+        <InputAdult register={register}></InputAdult>
       </div>
       <div className="submit">
         <label htmlFor="input-submit">

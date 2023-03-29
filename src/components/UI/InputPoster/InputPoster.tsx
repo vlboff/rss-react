@@ -1,14 +1,22 @@
-import React, { Component } from 'react';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { IForm } from '../../../interfaces';
 
-function InputPoster() {
+function InputPoster(props: { register: UseFormRegister<IForm>; errors: FieldErrors<IForm> }) {
   return (
     <div className="input-form">
       <label htmlFor="input-poster" className="input-poster">
         Add poster:
-        <input type="file" id="input-poster" accept=".png, .jpg, .jpeg" />
+        <input
+          type="file"
+          id="input-poster"
+          accept=".png, .jpg, .jpeg"
+          {...props.register('image', { required: true })}
+        />
         <div>download image</div>
       </label>
-      <p className={`invalid-form-text ${''}`}>*upload some image</p>
+      <p className={`invalid-form-text ${props.errors.image ? 'active' : ''}`}>
+        *upload some image
+      </p>
     </div>
   );
 }

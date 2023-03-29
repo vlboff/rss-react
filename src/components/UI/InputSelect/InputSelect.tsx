@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { IForm } from '../../../interfaces';
 
-function InputSelect() {
+function InputSelect(props: { register: UseFormRegister<IForm>; errors: FieldErrors<IForm> }) {
   return (
     <div className="input-form">
       <label htmlFor="input-select" className="input-select">
         {' '}
         Select ganre:
-        <select name="Select ganre" id="input-select">
+        <select id="input-select" {...props.register('ganre', { required: true })}>
           <option value="" hidden>
             choose one:
           </option>
@@ -21,7 +22,7 @@ function InputSelect() {
           <option value="Mystery">Western</option>
         </select>
       </label>
-      <p className={`invalid-form-text ${''}`}>*choose one genre</p>
+      <p className={`invalid-form-text ${props.errors.ganre ? 'active' : ''}`}>*choose one genre</p>
     </div>
   );
 }

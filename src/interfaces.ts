@@ -50,30 +50,28 @@ export interface IRadioField {
   invalidStatus: string;
 }
 
+interface FileList {
+  0: Blob | MediaSource;
+  length: number;
+}
+
 export interface IForm {
   title: string | null | undefined;
   date: string | null | undefined;
   ganre: string | null | undefined;
-  image: string | null;
+  image: FileList | null;
   status: string | null | undefined;
   adult: boolean | undefined;
 }
 
-export interface ICardState {
-  title: string | null | undefined;
-  date: string | null | undefined;
-  ganre: string | null | undefined;
-  image: string | null;
-  status: string | null | undefined;
-  adult: boolean | undefined;
-  errors: {
-    invalidTitle: string;
-    invalidGanre: string;
-    invalidDate: string;
-    invalidPoster: string;
-    invalidStatus: string;
-  };
-}
+export const emptyFormState: IForm = {
+  title: null,
+  date: null,
+  ganre: null,
+  image: null,
+  status: null,
+  adult: false,
+};
 
 export interface Ivalidation {
   inputTitleRef: React.RefObject<HTMLInputElement>;

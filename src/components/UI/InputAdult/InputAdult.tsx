@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import { UseFormRegister } from 'react-hook-form';
+import { IForm } from '../../../interfaces';
 
-function InputAdult() {
+function InputAdult(props: { register: UseFormRegister<IForm> }) {
   return (
     <div className="input-form">
       <label htmlFor="input-adult" className="input-adult">
-        <input type="checkbox" name="adult" id="input-adult" />
+        <input type="checkbox" id="input-adult" {...props.register('adult')} />
         18+
       </label>
     </div>
