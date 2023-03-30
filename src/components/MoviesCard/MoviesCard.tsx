@@ -4,7 +4,13 @@ function MoviesCard(props: { cardState: IForm }) {
   return (
     <div className="movies-card">
       <img
-        src={props.cardState.image ? URL.createObjectURL(props.cardState.image[0]) : ''}
+        src={
+          props.cardState.image
+            ? props.cardState.image[0]
+              ? URL.createObjectURL(props.cardState.image[0])
+              : ''
+            : ''
+        }
         alt="poster.jpg"
       />
       <div className="info">

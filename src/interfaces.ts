@@ -51,7 +51,7 @@ export interface IRadioField {
 }
 
 interface FileList {
-  0: Blob | MediaSource;
+  0?: Blob | MediaSource;
   length: number;
 }
 

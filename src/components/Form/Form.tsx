@@ -13,13 +13,18 @@ function Form(props: { setFormData: React.Dispatch<React.SetStateAction<IForm>> 
   const {
     register,
     handleSubmit,
-    reset,
+    setValue,
     formState: { errors },
   } = useForm<IForm>();
 
   const onSubmit: SubmitHandler<IForm> = (data) => {
+    console.log(data);
     setData(data);
-    // reset();
+    setValue('title', null);
+    setValue('date', null);
+    setValue('ganre', null);
+    setValue('status', null);
+    setValue('adult', false);
   };
 
   useEffect(() => {
