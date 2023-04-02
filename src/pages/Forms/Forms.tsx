@@ -5,14 +5,15 @@ import { emptyFormState, IForm } from '../../interfaces';
 
 function Forms(props: { setPath: () => void }) {
   const [formData, setFormData] = useState<IForm>(emptyFormState);
+  const [lengthArray, setLengthArray] = useState(0);
   useEffect(() => {
     props.setPath();
   }, []);
 
   return (
     <main>
-      <Form setFormData={setFormData}></Form>
-      <MoviesCardsField formData={formData}></MoviesCardsField>
+      <Form setFormData={setFormData} lengthArray={lengthArray}></Form>
+      <MoviesCardsField formData={formData} setLengthArray={setLengthArray}></MoviesCardsField>
     </main>
   );
 }

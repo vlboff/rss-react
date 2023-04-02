@@ -2,11 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { IForm } from '../../interfaces';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardsField(props: { formData: IForm }) {
+function MoviesCardsField(props: {
+  formData: IForm;
+  setLengthArray: React.Dispatch<React.SetStateAction<number>>;
+}) {
   const [cardsArray, setCardsArray] = useState<IForm[]>([]);
 
   useEffect(() => {
-    setCardsArray(() => (props.formData.title ? [...cardsArray, props.formData] : [...cardsArray]));
+    props.setLengthArray(cardsArray.length);
+  }, [cardsArray]);
+
+  useEffect(() => {
+    setCardsArray(() =>
+      props.formData.title ? [...cardsArray, structuredClone(props.formData)] : [...cardsArray]
+    );
   }, [props.formData]);
 
   return (

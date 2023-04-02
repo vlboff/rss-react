@@ -8,34 +8,45 @@ import InputAdult from '../UI/InputAdult/InputAdult';
 import { emptyFormState, IForm } from '../../interfaces';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-function Form(props: { setFormData: React.Dispatch<React.SetStateAction<IForm>> }) {
+function Form(props: {
+  setFormData: React.Dispatch<React.SetStateAction<IForm>>;
+  lengthArray: number;
+}) {
   const [data, setData] = useState<IForm>(emptyFormState);
+  const [image, setImage] = useState<FileList | null>(null);
   const {
     register,
     handleSubmit,
-    setValue,
+    reset,
     formState: { errors },
   } = useForm<IForm>();
 
   const onSubmit: SubmitHandler<IForm> = (data) => {
-    console.log(data);
     setData(data);
-    setValue('title', null);
-    setValue('date', null);
-    setValue('ganre', null);
-    setValue('status', null);
-    setValue('adult', false);
   };
 
   useEffect(() => {
-    props.setFormData(data);
+    props.setFormData({
+      title: data.title,
+      date: data.date,
+      ganre: data.ganre,
+      image: image,
+      status: data.status,
+      adult: data.adult,
+    });
   }, [data]);
+
+  useEffect(() => {
+    if (props.lengthArray > 0) {
+      reset();
+    }
+  }, [props.lengthArray]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className="inputs">
         <InputTitle register={register} errors={errors}></InputTitle>
-        <InputPoster register={register} errors={errors}></InputPoster>
+        <InputPoster register={register} errors={errors} setImage={setImage}></InputPoster>
         <InputSelect register={register} errors={errors}></InputSelect>
         <InputDate register={register} errors={errors}></InputDate>
         <RadioField register={register} errors={errors}></RadioField>
