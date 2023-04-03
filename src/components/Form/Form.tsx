@@ -38,6 +38,7 @@ function Form(props: {
 
   useEffect(() => {
     if (props.lengthArray > 0) {
+      alert('form submitted successfully');
       reset();
     }
   }, [props.lengthArray]);
