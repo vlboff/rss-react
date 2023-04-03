@@ -8,7 +8,7 @@ function Forms(props: { setPath: () => void }) {
   const [lengthArray, setLengthArray] = useState(0);
   useEffect(() => {
     props.setPath();
-  }, []);
+  }, [props]);
 
   return (
     <main>

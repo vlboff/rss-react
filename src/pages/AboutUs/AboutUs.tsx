@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 function AboutUs(props: { setPath: () => void }) {
   useEffect(() => {
     props.setPath();
-  }, []);
+  }, [props]);
 
   return (
     <main>

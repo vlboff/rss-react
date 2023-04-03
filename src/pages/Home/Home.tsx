@@ -5,7 +5,7 @@ import FieldOfCards from '../../components/FieldOfCards/FieldOfCards';
 function Home(props: { setPath: () => void }) {
   useEffect(() => {
     props.setPath();
-  }, []);
+  }, [props]);
 
   return (
     <main>

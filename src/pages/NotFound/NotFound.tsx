@@ -4,7 +4,7 @@ import { ReactComponent as SadFace } from '../../assets/sad-face.svg';
 function NotFound(props: { setPath: () => void }) {
   useEffect(() => {
     props.setPath();
-  }, []);
+  }, [props]);
 
   return (
     <main>
