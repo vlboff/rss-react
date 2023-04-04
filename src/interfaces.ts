@@ -20,6 +20,12 @@ export interface IData {
   limit: number;
 }
 
+export enum apiParams {
+  mainPath = 'https://api.themoviedb.org/3/movie/popular',
+  searchPath = 'https://api.themoviedb.org/3/search/movie',
+  apiKey = '66930cf47c708be8448292a4eb1d7ab5',
+}
+
 export enum pagePath {
   home = '#/',
   about = '#/about',
