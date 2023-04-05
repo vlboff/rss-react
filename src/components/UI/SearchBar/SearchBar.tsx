@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ReactComponent as Magnifier } from '../../../assets/magnifier.svg';
 
 function SearchBar() {
-  const [searchValue, setSearchValue] = useState(localStorage.getItem('searchValue') || '');
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  useEffect(() => {
+    setSearchValue(localStorage.getItem('searchValue') || '');
+  }, []);
 
   const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     localStorage.setItem('searchValue', e.target.value);
