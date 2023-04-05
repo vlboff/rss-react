@@ -50,37 +50,28 @@ export interface IRadioField {
   invalidStatus: string;
 }
 
-export interface IForm {
-  formRef: React.RefObject<HTMLFormElement>;
-  onSubmit: () => void;
-  inputTitleRef: React.RefObject<HTMLInputElement>;
-  inputDateRef: React.RefObject<HTMLInputElement>;
-  inputSelectRef: React.RefObject<HTMLSelectElement>;
-  inputPosterRef: React.RefObject<HTMLInputElement>;
-  inputRadioRumoredRef: React.RefObject<HTMLInputElement>;
-  inputRadioPlannedRef: React.RefObject<HTMLInputElement>;
-  inputRadioInProductionRef: React.RefObject<HTMLInputElement>;
-  inputRadioPostProductionRef: React.RefObject<HTMLInputElement>;
-  inputRadioReleasedRef: React.RefObject<HTMLInputElement>;
-  inputAdultRef: React.RefObject<HTMLInputElement>;
-  cardState: ICardState;
+interface FileList {
+  0?: Blob | MediaSource;
+  length: number;
 }
 
-export interface ICardState {
+export interface IForm {
   title: string | null | undefined;
   date: string | null | undefined;
   ganre: string | null | undefined;
-  image: string | null;
+  image: FileList | null;
   status: string | null | undefined;
   adult: boolean | undefined;
-  errors: {
-    invalidTitle: string;
-    invalidGanre: string;
-    invalidDate: string;
-    invalidPoster: string;
-    invalidStatus: string;
-  };
 }
+
+export const emptyFormState: IForm = {
+  title: null,
+  date: null,
+  ganre: null,
+  image: null,
+  status: null,
+  adult: false,
+};
 
 export interface Ivalidation {
   inputTitleRef: React.RefObject<HTMLInputElement>;

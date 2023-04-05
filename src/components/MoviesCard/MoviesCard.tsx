@@ -1,29 +1,27 @@
-import React, { Component } from 'react';
-import { ICardState } from '../../interfaces';
+import { IForm } from '../../interfaces';
 
-class MoviesCard extends Component<{ cardState: ICardState }> {
-  constructor(props: { cardState: ICardState }) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div className="movies-card">
-        <img src={this.props.cardState.image as string} alt="poster.jpg" />
-        <div className="info">
-          <h3>{this.props.cardState.title}</h3>
-          <p>{this.props.cardState.ganre}</p>
-          <p>{`Date of release: ${
-            this.props.cardState.date ? this.props.cardState.date : 'unknown'
-          }`}</p>
-          <p>{`Status - ${
-            this.props.cardState.status ? this.props.cardState.status : 'unknown'
-          }`}</p>
-          <h3 className="adult">{this.props.cardState.adult ? '18+' : ''}</h3>
-        </div>
+function MoviesCard(props: { cardState: IForm }) {
+  return (
+    <div className="movies-card">
+      <img
+        src={
+          props.cardState.image
+            ? props.cardState.image[0]
+              ? URL.createObjectURL(props.cardState.image[0])
+              : ''
+            : ''
+        }
+        alt="poster.jpg"
+      />
+      <div className="info">
+        <h3>{props.cardState.title}</h3>
+        <p>{props.cardState.ganre}</p>
+        <p>{`Date of release: ${props.cardState.date ? props.cardState.date : 'unknown'}`}</p>
+        <p>{`Status - ${props.cardState.status ? props.cardState.status : 'unknown'}`}</p>
+        <h3 className="adult">{props.cardState.adult ? '18+' : ''}</h3>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default MoviesCard;

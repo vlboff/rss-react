@@ -1,33 +1,31 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import { ReactComponent as Magnifier } from '../../../assets/magnifier.svg';
 
-class SearchBar extends Component {
-  state = {
-    searchValue: localStorage.getItem('searchValue') || '',
-  };
+function SearchBar() {
+  const [searchValue, setSearchValue] = useState<string>('');
 
-  onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  useEffect(() => {
+    setSearchValue(localStorage.getItem('searchValue') || '');
+  }, []);
+
+  const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     localStorage.setItem('searchValue', e.target.value);
-    this.setState({
-      searchValue: e.target.value,
-    });
+    setSearchValue(e.target.value);
   };
 
-  render() {
-    return (
-      <div className="search-bar">
-        <label>
-          <Magnifier />
-          <input
-            type="search"
-            placeholder="Search on the page"
-            value={this.state.searchValue}
-            onChange={this.onValueChange}
-          />
-        </label>
-      </div>
-    );
-  }
+  return (
+    <div className="search-bar">
+      <label>
+        <Magnifier />
+        <input
+          type="search"
+          placeholder="Search on the page"
+          value={searchValue}
+          onChange={onValueChange}
+        />
+      </label>
+    </div>
+  );
 }
 
 export default SearchBar;

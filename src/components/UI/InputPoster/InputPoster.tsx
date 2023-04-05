@@ -1,30 +1,29 @@
-import React, { Component } from 'react';
+import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { IForm } from '../../../interfaces';
 
-class InputPoster extends Component<{
-  inputPosterRef: React.RefObject<HTMLInputElement>;
-  invalidPoster: string;
-}> {
-  constructor(props: { inputPosterRef: React.RefObject<HTMLInputElement>; invalidPoster: string }) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div className="input-form">
-        <label htmlFor="input-poster" className="input-poster">
-          Add poster:
-          <input
-            ref={this.props.inputPosterRef}
-            type="file"
-            id="input-poster"
-            accept=".png, .jpg, .jpeg"
-          />
-          <div>download image</div>
-        </label>
-        <p className={`invalid-form-text ${this.props.invalidPoster}`}>*upload some image</p>
-      </div>
-    );
-  }
+function InputPoster(props: {
+  register: UseFormRegister<IForm>;
+  errors: FieldErrors<IForm>;
+  setImage: React.Dispatch<React.SetStateAction<FileList | null>>;
+}) {
+  return (
+    <div className="input-form">
+      <label htmlFor="input-poster" className="input-poster">
+        Add poster:
+        <input
+          type="file"
+          id="input-poster"
+          accept=".png, .jpg, .jpeg"
+          {...props.register('image', { required: true })}
+          onChange={(e) => props.setImage(e.currentTarget.files)}
+        />
+        <div>download image</div>
+      </label>
+      <p className={`invalid-form-text ${props.errors.image ? 'active' : ''}`}>
+        *upload some image
+      </p>
+    </div>
+  );
 }
 
 export default InputPoster;

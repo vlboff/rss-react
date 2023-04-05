@@ -1,36 +1,31 @@
-import React, { Component } from 'react';
-import { ICardState } from '../../interfaces';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
+import { IForm } from '../../interfaces';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-class MoviesCardsField extends Component<
-  { cardState: Readonly<ICardState> },
-  { cardArr: ICardState[] }
-> {
-  constructor(props: { cardState: Readonly<ICardState> }) {
-    super(props);
-    this.state = {
-      cardArr: [],
-    };
-  }
+function MoviesCardsField(props: {
+  formData: IForm;
+  setLengthArray: React.Dispatch<React.SetStateAction<number>>;
+}) {
+  const [cardsArray, setCardsArray] = useState<IForm[]>([]);
 
-  componentDidUpdate(prevProps: { cardState: Readonly<ICardState> }) {
-    if (this.props.cardState !== prevProps.cardState) {
-      if (Object.values(this.props.cardState.errors).every((item) => item === '')) {
-        this.setState({ cardArr: [...this.state.cardArr, this.props.cardState] });
-        alert('the form was successfully submitted');
-      }
-    }
-  }
+  useEffect(() => {
+    props.setLengthArray(cardsArray.length);
+  }, [cardsArray]);
 
-  render() {
-    return (
-      <div className="movies-cards">
-        {this.state.cardArr.map((item) => (
-          <MoviesCard key={`${item.title}${Math.random()}`} cardState={item}></MoviesCard>
-        ))}
-      </div>
+  useEffect(() => {
+    setCardsArray(() =>
+      props.formData.title ? [...cardsArray, structuredClone(props.formData)] : [...cardsArray]
     );
-  }
+  }, [props.formData]);
+
+  return (
+    <div className="movies-cards">
+      {cardsArray.map((item) => (
+        <MoviesCard key={`${item.title}${Math.random()}`} cardState={item}></MoviesCard>
+      ))}
+    </div>
+  );
 }
 
 export default MoviesCardsField;
