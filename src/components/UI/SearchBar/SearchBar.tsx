@@ -1,21 +1,22 @@
 import { useState } from 'react';
 import { ReactComponent as Magnifier } from '../../../assets/magnifier.svg';
 import { getSearchedMovies } from '../../../api/getSearchedMovies';
+import { apiParams } from '../../../interfaces';
 
 function SearchBar(props: {
-  searchValue: string | number;
-  setSearchValue: React.Dispatch<React.SetStateAction<string | number>>;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string | number>>;
 }) {
+  const [searchValue, setSearchValue] = useState<string | number>(
+    localStorage.getItem('searchValue') || ''
+  );
   const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     localStorage.setItem('searchValue', e.target.value);
-    props.setSearchValue(e.target.value);
+    setSearchValue(e.target.value);
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === 'Enter') {
-      // getSearchedMovies();
-      console.log('enter');
-      console.log(props.searchValue);
+      props.setSearchQuery(searchValue);
     }
   };
 
@@ -26,7 +27,7 @@ function SearchBar(props: {
         <input
           type="text"
           placeholder="Search on the page"
-          value={props.searchValue}
+          value={searchValue}
           onChange={onValueChange}
           onKeyDown={(e) => handleKeyDown(e)}
         />

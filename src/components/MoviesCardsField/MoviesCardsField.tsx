@@ -22,7 +22,15 @@ function MoviesCardsField(props: {
   return (
     <div className="movies-cards">
       {cardsArray.map((item) => (
-        <MoviesCard key={`${item.title}${Math.random()}`} cardState={item}></MoviesCard>
+        <MoviesCard
+          key={`${item.title}${Math.random()}`}
+          image={item.image ? (item.image[0] ? URL.createObjectURL(item.image[0]) : '') : ''}
+          title={item.title}
+          ganre={item.ganre}
+          date={item.date ? item.date : 'unknown'}
+          status={item.status ? item.status : 'unknown'}
+          adult={item.adult}
+        ></MoviesCard>
       ))}
     </div>
   );

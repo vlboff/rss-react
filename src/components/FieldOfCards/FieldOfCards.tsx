@@ -1,31 +1,39 @@
-import data from '../../data/data.json';
-import Card from '../Card/Card';
-import { IProductData, apiParams } from '../../interfaces';
+import { IGetMovies, IProductData, apiParams } from '../../interfaces';
 import { getMovies } from '../../api/getMovies';
+import MoviesCard from '../MoviesCard/MoviesCard';
 import { getSearchedMovies } from '../../api/getSearchedMovies';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-function FieldOfCards(props: { searchValue: string | number }) {
-  const products: IProductData[] = data.products;
-  // useEffect(() => {
-  //   getMovies(apiParams.mainPath, apiParams.apiKey);
-  // }, []);
+function FieldOfCards(props: { searchQuery: string | number }) {
+  const [popularMovies, setPopularMovies] = useState<IGetMovies | null>(null);
 
   useEffect(() => {
-    // getSearchedMovies(apiParams.searchPath, apiParams.apiKey, props.searchValue);
-    console.log(props.searchValue);
-  }, [props.searchValue]);
+    (async function () {
+      setPopularMovies(await getMovies(apiParams.mainPath, apiParams.apiKey));
+    })();
+  }, []);
+
+  useEffect(() => {
+    if (props.searchQuery) {
+      (async function () {
+        setPopularMovies(
+          await getSearchedMovies(apiParams.searchPath, apiParams.apiKey, props.searchQuery)
+        );
+      })();
+    }
+  }, [props.searchQuery]);
 
   return (
     <div className="field-of-cards">
-      {products.map((item) => (
-        <Card
-          key={item.title}
-          img={item.thumbnail}
+      {popularMovies?.results.map((item) => (
+        <MoviesCard
+          key={item.id}
+          imgPath="https://image.tmdb.org/t/p/original"
+          image={item.poster_path}
           title={item.title}
-          rating={item.rating}
-          stock={item.stock}
-          price={item.price}
+          vote={item.vote_average}
+          date={item.release_date}
+          adult={item.adult}
         />
       ))}
     </div>

@@ -3,17 +3,16 @@ import SearchBar from '../..//components/UI/SearchBar/SearchBar';
 import FieldOfCards from '../../components/FieldOfCards/FieldOfCards';
 
 function Home(props: { setPath: () => void }) {
-  const [searchValue, setSearchValue] = useState<string | number>(
-    localStorage.getItem('searchValue') || ''
-  );
+  const [searchQuery, setSearchQuery] = useState<string | number>('');
+
   useEffect(() => {
     props.setPath();
   }, [props]);
 
   return (
     <main>
-      <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
-      <FieldOfCards searchValue={searchValue} />
+      <SearchBar setSearchQuery={setSearchQuery} />
+      <FieldOfCards searchQuery={searchQuery} />
     </main>
   );
 }

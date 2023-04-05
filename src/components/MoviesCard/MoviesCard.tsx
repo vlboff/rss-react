@@ -1,24 +1,25 @@
 import { IForm } from '../../interfaces';
+import { ReactComponent as Star } from '../../assets/star.svg';
 
-function MoviesCard(props: { cardState: IForm }) {
+function MoviesCard({ image, title, ganre, date, status, adult, vote, imgPath }: IForm) {
   return (
     <div className="movies-card">
-      <img
-        src={
-          props.cardState.image
-            ? props.cardState.image[0]
-              ? URL.createObjectURL(props.cardState.image[0])
-              : ''
-            : ''
-        }
-        alt="poster.jpg"
-      />
+      {imgPath ? (
+        <img src={`${imgPath}${image ? (image as string) : ''}`} alt="poster.jpg" />
+      ) : (
+        <img src={image ? (image as string) : ''} alt="poster.jpg" />
+      )}
       <div className="info">
-        <h3>{props.cardState.title}</h3>
-        <p>{props.cardState.ganre}</p>
-        <p>{`Date of release: ${props.cardState.date ? props.cardState.date : 'unknown'}`}</p>
-        <p>{`Status - ${props.cardState.status ? props.cardState.status : 'unknown'}`}</p>
-        <h3 className="adult">{props.cardState.adult ? '18+' : ''}</h3>
+        <h3>{title}</h3>
+        <p>{ganre}</p>
+        {vote ? (
+          <p>
+            <Star /> {vote}
+          </p>
+        ) : null}
+        <p>{`Date of release: ${date}`}</p>
+        {status ? <p>{`Status - ${status}`}</p> : null}
+        <h3 className="adult">{adult ? '18+' : ''}</h3>
       </div>
     </div>
   );
