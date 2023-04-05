@@ -31,3 +31,16 @@ export function validation({
       : 'active',
   };
 }
+
+const NO_IMG =
+  'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930';
+
+export function getImage(imgPath: string | undefined, image: string) {
+  if (imgPath && image) {
+    return <img src={`${imgPath}${image}`} alt="poster.jpg" />;
+  } else if (!imgPath && image) {
+    return <img src={image} alt="poster.jpg" />;
+  } else {
+    return <img src={`${NO_IMG}`} alt="poster.jpg" />;
+  }
+}

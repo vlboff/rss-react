@@ -1,21 +1,22 @@
 import { IForm } from '../../interfaces';
 import { ReactComponent as Star } from '../../assets/star.svg';
+import { getImage } from '../../utils/utils';
 
 function MoviesCard({ image, title, ganre, date, status, adult, vote, imgPath }: IForm) {
   return (
     <div className="movies-card">
-      {imgPath ? (
-        <img src={`${imgPath}${image ? (image as string) : ''}`} alt="poster.jpg" />
-      ) : (
-        <img src={image ? (image as string) : ''} alt="poster.jpg" />
-      )}
-      <div className="info">
+      <div className="main-info">
+        {getImage(imgPath, image as string)}
         <h3>{title}</h3>
+      </div>
+
+      <div className="info">
         <p>{ganre}</p>
         {vote ? (
-          <p>
-            <Star /> {vote}
-          </p>
+          <div>
+            <Star />
+            <p>{vote}</p>
+          </div>
         ) : null}
         <p>{`Date of release: ${date}`}</p>
         {status ? <p>{`Status - ${status}`}</p> : null}

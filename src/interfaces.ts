@@ -23,6 +23,7 @@ export interface IData {
 export enum apiParams {
   mainPath = 'https://api.themoviedb.org/3/movie/popular',
   searchPath = 'https://api.themoviedb.org/3/search/movie',
+  imgPath = 'https://image.tmdb.org/t/p/original',
   apiKey = '66930cf47c708be8448292a4eb1d7ab5',
 }
 

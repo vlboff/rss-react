@@ -1,4 +1,4 @@
-import { IGetMovies, IProductData, apiParams } from '../../interfaces';
+import { IGetMovies, apiParams } from '../../interfaces';
 import { getMovies } from '../../api/getMovies';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { getSearchedMovies } from '../../api/getSearchedMovies';
@@ -20,6 +20,10 @@ function FieldOfCards(props: { searchQuery: string | number }) {
           await getSearchedMovies(apiParams.searchPath, apiParams.apiKey, props.searchQuery)
         );
       })();
+    } else {
+      (async function () {
+        setPopularMovies(await getMovies(apiParams.mainPath, apiParams.apiKey));
+      })();
     }
   }, [props.searchQuery]);
 
@@ -28,7 +32,7 @@ function FieldOfCards(props: { searchQuery: string | number }) {
       {popularMovies?.results.map((item) => (
         <MoviesCard
           key={item.id}
-          imgPath="https://image.tmdb.org/t/p/original"
+          imgPath={apiParams.imgPath}
           image={item.poster_path}
           title={item.title}
           vote={item.vote_average}
