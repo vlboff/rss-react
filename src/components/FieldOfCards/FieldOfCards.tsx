@@ -3,6 +3,7 @@ import { getMovies } from '../../api/getMovies';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { getSearchedMovies } from '../../api/getSearchedMovies';
 import { useEffect, useState } from 'react';
+import { ReactComponent as PreloaderIcon } from '../../assets/preloader.svg';
 
 function FieldOfCards(props: { searchQuery: string | number }) {
   const [popularMovies, setPopularMovies] = useState<IGetMovies | null>(null);
@@ -27,9 +28,9 @@ function FieldOfCards(props: { searchQuery: string | number }) {
     }
   }, [props.searchQuery]);
 
-  return (
+  return popularMovies ? (
     <div className="field-of-cards">
-      {popularMovies?.results.map((item) => (
+      {popularMovies.results.map((item) => (
         <MoviesCard
           key={item.id}
           imgPath={apiParams.imgPath}
@@ -41,6 +42,11 @@ function FieldOfCards(props: { searchQuery: string | number }) {
         />
       ))}
     </div>
+  ) : (
+    <h1 className="preloader">
+      <PreloaderIcon />
+      <p>Loading...</p>
+    </h1>
   );
 }
 

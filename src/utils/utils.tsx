@@ -1,4 +1,4 @@
-import { Ivalidation } from '../interfaces';
+import { Ivalidation, IForm } from '../interfaces';
 
 export function validation({
   inputTitleRef,
@@ -37,10 +37,10 @@ const NO_IMG =
 
 export function getImage(imgPath: string | undefined, image: string) {
   if (imgPath && image) {
-    return <img src={`${imgPath}${image}`} alt="poster.jpg" />;
+    return `${imgPath}${image}`;
   } else if (!imgPath && image) {
-    return <img src={image} alt="poster.jpg" />;
+    return image;
   } else {
-    return <img src={`${NO_IMG}`} alt="poster.jpg" />;
+    return NO_IMG;
   }
 }
