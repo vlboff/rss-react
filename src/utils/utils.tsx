@@ -35,7 +35,7 @@ export function validation({
 const NO_IMG =
   'https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930';
 
-export function getImage(imgPath: string | undefined, image: string) {
+export function getImage(imgPath: string | undefined, image: string | null | undefined) {
   if (imgPath && image) {
     return `${imgPath}${image}`;
   } else if (!imgPath && image) {
