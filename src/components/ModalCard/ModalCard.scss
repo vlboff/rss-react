@@ -11,8 +11,33 @@
   transform: scale(0);
 
   .modal_content {
-    width: 500px;
-    height: 315px;
+    display: flex;
+    width: 600px;
+    min-height: 350px;
+
+    .modal_image {
+      width: 43%;
+      img {
+        width: 100%;
+        min-height: 100%;
+      }
+    }
+
+    .modal_info{
+      width: 57%;
+      padding: 5px;
+      display: grid;
+      align-content: space-between;
+
+      .modal_rating{
+        display: flex;
+        align-items: center;
+
+        p {
+          margin: 4px 0 0 5px;
+        }
+      }
+    }
   }
 }
 

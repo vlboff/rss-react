@@ -23,6 +23,7 @@ export interface IData {
 export enum apiParams {
   mainPath = 'https://api.themoviedb.org/3/movie/popular',
   searchPath = 'https://api.themoviedb.org/3/search/movie',
+  detailPath = 'https://api.themoviedb.org/3/movie/',
   imgPath = 'https://image.tmdb.org/t/p/original',
   apiKey = '66930cf47c708be8448292a4eb1d7ab5',
 }
@@ -102,18 +103,51 @@ export interface IGetMovies {
 }
 
 export interface IGetMoviesResults {
-  poster_path: string | null;
   adult: boolean;
-  overview: string;
-  release_date: string;
-  genre_ids: number[];
-  id: number;
-  original_title: string;
-  original_language: string;
-  title: string;
   backdrop_path: string | null;
+  belongs_to_collection: null | object;
+  budget: number;
+  genres: [
+    {
+      id: number;
+      name: string;
+    }
+  ];
+  homepage: string | null;
+  id: number;
+  imdb_id: string | null;
+  original_language: string;
+  original_title: string;
+  overview: string | null;
   popularity: number;
-  vote_count: number;
+  poster_path: string | null;
+  production_companies: [
+    {
+      id: number;
+      logo_path: string;
+      name: string | null;
+      origin_country: string;
+    }
+  ];
+  production_countries: [
+    {
+      iso_3166_1: string;
+      name: string;
+    }
+  ];
+  release_date: string;
+  revenue: number;
+  runtime: number | null;
+  spoken_languages: [
+    {
+      iso_639_1: string;
+      name: string;
+    }
+  ];
+  status: string;
+  tagline: string | null;
+  title: string;
   video: boolean;
   vote_average: number;
+  vote_count: number;
 }

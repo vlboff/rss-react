@@ -5,6 +5,7 @@ import { ReactComponent as PreloaderIcon } from '../../assets/preloader.svg';
 
 function MoviesCard(props: {
   image: string | null | undefined;
+  id?: number;
   title: string | undefined;
   ganre?: string | undefined;
   date: string | undefined;
@@ -13,9 +14,16 @@ function MoviesCard(props: {
   vote: number | undefined;
   imgPath: string | undefined;
   setActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setMoviesId: React.Dispatch<React.SetStateAction<number>>;
 }) {
   return (
-    <div className="movies-card" onClick={() => props.setActive(true)}>
+    <div
+      className="movies-card"
+      onClick={() => {
+        props.setActive(true);
+        props.setMoviesId(props.id ? props.id : 0);
+      }}
+    >
       <div className="main-info">
         <img
           className={`main-info_image`}

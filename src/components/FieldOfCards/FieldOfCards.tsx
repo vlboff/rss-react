@@ -9,6 +9,7 @@ import ModalCard from '../ModalCard/ModalCard';
 function FieldOfCards(props: { searchQuery: string | number }) {
   const [popularMovies, setPopularMovies] = useState<IGetMovies | null>(null);
   const [active, setActive] = useState(false);
+  const [moviesId, setMoviesId] = useState(0);
 
   useEffect(() => {
     (async function () {
@@ -38,6 +39,7 @@ function FieldOfCards(props: { searchQuery: string | number }) {
         {popularMovies.results.map((item) => (
           <MoviesCard
             key={item.id}
+            id={item.id}
             imgPath={apiParams.imgPath}
             image={item.poster_path}
             title={item.title}
@@ -45,10 +47,11 @@ function FieldOfCards(props: { searchQuery: string | number }) {
             date={item.release_date}
             adult={item.adult}
             setActive={setActive}
+            setMoviesId={setMoviesId}
           />
         ))}
       </div>
-      <ModalCard active={active} setActive={setActive} />
+      <ModalCard active={active} setActive={setActive} moviesId={moviesId} />
     </>
   ) : (
     <h1 className="preloader">
