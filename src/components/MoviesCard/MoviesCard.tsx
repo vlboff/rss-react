@@ -1,27 +1,25 @@
-import { IForm } from '../../interfaces';
 import { ReactComponent as Star } from '../../assets/star.svg';
 import { getImage } from '../../utils/utils';
-import { ReactComponent as PreloaderIcon } from '../../assets/preloader.svg';
 
 function MoviesCard(props: {
   image: string | null | undefined;
   id?: number;
-  title: string | undefined;
-  ganre?: string | undefined;
+  title: string | null | undefined;
+  ganre?: string | null | undefined;
   date: string | undefined;
   status?: string | undefined;
   adult: boolean | undefined;
-  vote: number | undefined;
-  imgPath: string | undefined;
-  setActive: React.Dispatch<React.SetStateAction<boolean>>;
-  setMoviesId: React.Dispatch<React.SetStateAction<number>>;
+  vote?: number | undefined;
+  imgPath?: string | undefined;
+  setActive?: React.Dispatch<React.SetStateAction<boolean>>;
+  setMoviesId?: React.Dispatch<React.SetStateAction<number>>;
 }) {
   return (
     <div
       className="movies-card"
       onClick={() => {
-        props.setActive(true);
-        props.setMoviesId(props.id ? props.id : 0);
+        props.setActive!(true);
+        props.setMoviesId!(props.id ? props.id : 0);
       }}
     >
       <div className="main-info">

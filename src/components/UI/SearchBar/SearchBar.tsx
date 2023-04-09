@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { ReactComponent as Magnifier } from '../../../assets/magnifier.svg';
-import { getSearchedMovies } from '../../../api/getSearchedMovies';
-import { apiParams } from '../../../interfaces';
 
 function SearchBar(props: {
   setSearchQuery: React.Dispatch<React.SetStateAction<string | number>>;

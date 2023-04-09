@@ -1,4 +1,4 @@
-import { Ivalidation, IForm } from '../interfaces';
+import { Ivalidation } from '../interfaces';
 
 export function validation({
   inputTitleRef,
