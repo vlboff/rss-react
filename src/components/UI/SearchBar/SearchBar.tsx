@@ -1,22 +1,26 @@
-import { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from 'react';
 import { ReactComponent as Magnifier } from '../../../assets/magnifier.svg';
 
 function SearchBar(props: {
   setSearchQuery: React.Dispatch<React.SetStateAction<string | number>>;
+  searchValue: string | number;
+  setSearchValue: React.Dispatch<React.SetStateAction<string | number>>;
 }) {
-  const [searchValue, setSearchValue] = useState<string | number>(
-    localStorage.getItem('searchValue') || ''
-  );
   const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     localStorage.setItem('searchValue', e.target.value);
-    setSearchValue(e.target.value);
+    props.setSearchValue(e.target.value);
   };
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === 'Enter') {
-      props.setSearchQuery(searchValue);
+      props.setSearchQuery(props.searchValue);
     }
   };
+
+  useEffect(() => {
+    props.setSearchQuery(props.searchValue);
+  }, []);
 
   return (
     <div className="search-bar">
@@ -25,7 +29,7 @@ function SearchBar(props: {
         <input
           type="text"
           placeholder="Search on the page"
-          value={searchValue}
+          value={props.searchValue}
           onChange={onValueChange}
           onKeyDown={(e) => handleKeyDown(e)}
         />

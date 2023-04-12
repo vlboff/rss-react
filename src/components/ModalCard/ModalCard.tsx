@@ -13,11 +13,13 @@ function ModalCard(props: {
   const [moviesDetails, setMoviesDetails] = useState<IGetMoviesResults | null>(null);
 
   useEffect(() => {
-    (async function () {
-      setMoviesDetails(
-        await getMoviesDetails(apiParams.detailPath, props.moviesId, apiParams.apiKey)
-      );
-    })();
+    if (props.moviesId) {
+      (async function () {
+        setMoviesDetails(
+          await getMoviesDetails(apiParams.detailPath, props.moviesId, apiParams.apiKey)
+        );
+      })();
+    }
   }, [props.moviesId]);
 
   useEffect(() => {

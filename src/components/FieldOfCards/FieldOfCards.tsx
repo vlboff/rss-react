@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { IGetMovies, apiParams } from '../../interfaces';
 import { getMovies } from '../../api/getMovies';
 import MoviesCard from '../MoviesCard/MoviesCard';
@@ -6,16 +7,10 @@ import { useEffect, useState } from 'react';
 import { ReactComponent as PreloaderIcon } from '../../assets/preload_oval.svg';
 import ModalCard from '../ModalCard/ModalCard';
 
-function FieldOfCards(props: { searchQuery: string | number }) {
+function FieldOfCards(props: { searchQuery: string | number; searchValue: string | number }) {
   const [popularMovies, setPopularMovies] = useState<IGetMovies | null>(null);
   const [active, setActive] = useState(false);
   const [moviesId, setMoviesId] = useState(0);
-
-  useEffect(() => {
-    (async function () {
-      setPopularMovies(await getMovies(apiParams.mainPath, apiParams.apiKey));
-    })();
-  }, []);
 
   useEffect(() => {
     if (props.searchQuery) {
@@ -23,6 +18,13 @@ function FieldOfCards(props: { searchQuery: string | number }) {
       (async function () {
         setPopularMovies(
           await getSearchedMovies(apiParams.searchPath, apiParams.apiKey, props.searchQuery)
+        );
+      })();
+    } else if (props.searchValue) {
+      setPopularMovies(null);
+      (async function () {
+        setPopularMovies(
+          await getSearchedMovies(apiParams.searchPath, apiParams.apiKey, props.searchValue)
         );
       })();
     } else {

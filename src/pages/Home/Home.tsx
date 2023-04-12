@@ -4,6 +4,9 @@ import FieldOfCards from '../../components/FieldOfCards/FieldOfCards';
 
 function Home(props: { setPath: () => void }) {
   const [searchQuery, setSearchQuery] = useState<string | number>('');
+  const [searchValue, setSearchValue] = useState<string | number>(
+    localStorage.getItem('searchValue') || ''
+  );
 
   useEffect(() => {
     props.setPath();
@@ -11,8 +14,12 @@ function Home(props: { setPath: () => void }) {
 
   return (
     <main>
-      <SearchBar setSearchQuery={setSearchQuery} />
-      <FieldOfCards searchQuery={searchQuery} />
+      <SearchBar
+        setSearchQuery={setSearchQuery}
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+      />
+      <FieldOfCards searchQuery={searchQuery} searchValue={searchValue} />
     </main>
   );
 }
