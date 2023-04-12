@@ -8,13 +8,17 @@ import RadioField from '../RadioField/RadioField';
 import InputAdult from '../UI/InputAdult/InputAdult';
 import { IForm } from '../../interfaces';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addCard } from '../../store/formSlice';
+import { getFormsImagePath } from '../../utils/utils';
 
-function Form(props: {
-  setFormData: React.Dispatch<React.SetStateAction<IForm>>;
-  lengthArray: number;
-}) {
+function Form() {
   const [image, setImage] = useState<FileList | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
+
+  const cardsArray = useAppSelector((state) => state.forms.formsArray);
+
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -24,24 +28,25 @@ function Form(props: {
   } = useForm<IForm>();
 
   const onSubmit: SubmitHandler<IForm> = (data) => {
-    props.setFormData({
-      title: data.title,
-      date: data.date,
-      ganre: data.ganre,
-      image: image,
-      status: data.status,
-      adult: data.adult,
-    });
+    dispatch(
+      addCard({
+        title: data.title,
+        date: data.date,
+        ganre: data.ganre,
+        image: getFormsImagePath(image),
+        status: data.status,
+        adult: data.adult,
+      })
+    );
   };
 
   useEffect(() => {
-    console.log(success);
-    if (props.lengthArray > 0) {
+    if (cardsArray.length > 0) {
       setSuccess(true);
       setTimeout(() => setSuccess(false), 1000);
       reset();
     }
-  }, [props.lengthArray]);
+  }, [cardsArray]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

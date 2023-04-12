@@ -58,7 +58,7 @@ export interface IRadioField {
   invalidStatus: string;
 }
 
-interface FileList {
+export interface FileList {
   0?: Blob | MediaSource;
   length: number;
 }
@@ -68,7 +68,7 @@ export interface IForm {
   date: string | null | undefined;
   ganre?: string | null | undefined;
   imgPath?: string;
-  image: FileList | null;
+  image: string | null;
   status?: string | null | undefined;
   vote?: number | null | undefined;
   adult: boolean | undefined;

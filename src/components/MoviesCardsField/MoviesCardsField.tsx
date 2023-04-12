@@ -1,30 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-import { IForm } from '../../interfaces';
+import React from 'react';
+import { useAppSelector } from '../../store/hooks';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardsField(props: {
-  formData: IForm;
-  setLengthArray: React.Dispatch<React.SetStateAction<number>>;
-}) {
-  const [cardsArray, setCardsArray] = useState<IForm[]>([]);
-
-  useEffect(() => {
-    props.setLengthArray(cardsArray.length);
-  }, [cardsArray]);
-
-  useEffect(() => {
-    setCardsArray(() =>
-      props.formData.title ? [...cardsArray, structuredClone(props.formData)] : [...cardsArray]
-    );
-  }, [props.formData]);
+function MoviesCardsField() {
+  const cardsArray = useAppSelector((state) => state.forms.formsArray);
 
   return (
     <div className="movies-cards">
       {cardsArray.map((item) => (
         <MoviesCard
           key={`${item.title}${Math.random()}`}
-          image={item.image ? (item.image[0] ? URL.createObjectURL(item.image[0]) : '') : ''}
+          image={item.image}
           title={item.title}
           ganre={item.ganre}
           date={item.date ? item.date : 'unknown'}

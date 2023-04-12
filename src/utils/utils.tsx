@@ -70,3 +70,15 @@ export function getRuntime(runtime: number) {
 export function getMoney(money: number) {
   return `${String(money).replace(/(\d)(?=(\d{3})+(\D|$))/g, '$1 ')}$`;
 }
+
+export function getFormsImagePath(image: FileList | null) {
+  if (image) {
+    if (image[0]) {
+      return URL.createObjectURL(image[0]);
+    } else {
+      return '';
+    }
+  } else {
+    return '';
+  }
+}
