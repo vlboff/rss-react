@@ -6,15 +6,16 @@ import InputSelect from '../UI/InputSelect/InputSelect';
 import InputPoster from '../UI/InputPoster/InputPoster';
 import RadioField from '../RadioField/RadioField';
 import InputAdult from '../UI/InputAdult/InputAdult';
-import { emptyFormState, IForm } from '../../interfaces';
+import { IForm } from '../../interfaces';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 function Form(props: {
   setFormData: React.Dispatch<React.SetStateAction<IForm>>;
   lengthArray: number;
 }) {
-  const [data, setData] = useState<IForm>(emptyFormState);
   const [image, setImage] = useState<FileList | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
+
   const {
     register,
     handleSubmit,
@@ -23,10 +24,6 @@ function Form(props: {
   } = useForm<IForm>();
 
   const onSubmit: SubmitHandler<IForm> = (data) => {
-    setData(data);
-  };
-
-  useEffect(() => {
     props.setFormData({
       title: data.title,
       date: data.date,
@@ -35,11 +32,13 @@ function Form(props: {
       status: data.status,
       adult: data.adult,
     });
-  }, [data]);
+  };
 
   useEffect(() => {
+    console.log(success);
     if (props.lengthArray > 0) {
-      alert('form submitted successfully');
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 1000);
       reset();
     }
   }, [props.lengthArray]);
@@ -58,6 +57,7 @@ function Form(props: {
         <label htmlFor="input-submit">
           <input type="submit" value="submit" />
         </label>
+        <span className={`success ${success ? 'active' : ''}`}>form submitted successfully!</span>
       </div>
     </form>
   );
