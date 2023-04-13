@@ -1,25 +1,23 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from 'react';
 import { ReactComponent as Magnifier } from '../../../assets/magnifier.svg';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { setSearchValue } from '../../../store/searchValueSlice';
+import { setSearchQuery } from '../../../store/searchQuerySlice';
 
-function SearchBar(props: {
-  setSearchQuery: React.Dispatch<React.SetStateAction<string | number>>;
-  searchValue: string | number;
-  setSearchValue: React.Dispatch<React.SetStateAction<string | number>>;
-}) {
-  const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    localStorage.setItem('searchValue', e.target.value);
-    props.setSearchValue(e.target.value);
-  };
+function SearchBar() {
+  const searchValue = useAppSelector((state) => state.searchValue.searchValue);
+
+  const dispatch = useAppDispatch();
 
   const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === 'Enter') {
-      props.setSearchQuery(props.searchValue);
+      dispatch(setSearchQuery(e.currentTarget.value));
     }
   };
 
   useEffect(() => {
-    props.setSearchQuery(props.searchValue);
+    dispatch(setSearchQuery(searchValue));
   }, []);
 
   return (
@@ -29,8 +27,8 @@ function SearchBar(props: {
         <input
           type="text"
           placeholder="Search on the page"
-          value={props.searchValue}
-          onChange={onValueChange}
+          value={searchValue}
+          onChange={(e) => dispatch(setSearchValue(e.currentTarget.value))}
           onKeyDown={(e) => handleKeyDown(e)}
         />
       </label>

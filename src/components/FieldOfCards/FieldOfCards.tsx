@@ -1,39 +1,34 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { IGetMovies, apiParams } from '../../interfaces';
-import { getMovies } from '../../api/getMovies';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import { getSearchedMovies } from '../../api/getSearchedMovies';
 import { useEffect, useState } from 'react';
 import { ReactComponent as PreloaderIcon } from '../../assets/preload_oval.svg';
 import ModalCard from '../ModalCard/ModalCard';
+import { useGetMoviesQuery, useGetSearchedMoviesQuery } from '../../store/moviesApi';
+import { useAppSelector } from '../../store/hooks';
 
-function FieldOfCards(props: { searchQuery: string | number; searchValue: string | number }) {
-  const [popularMovies, setPopularMovies] = useState<IGetMovies | null>(null);
+function FieldOfCards() {
+  const [popularMovies, setPopularMovies] = useState<IGetMovies | null | undefined>(null);
   const [active, setActive] = useState(false);
   const [moviesId, setMoviesId] = useState(0);
 
+  const searchQuery = useAppSelector((state) => state.searchQuery.searchQuery);
+
+  const searchedMoviesParams = {
+    apiKey: apiParams.apiKey,
+    searchValue: searchQuery,
+  };
+
+  const { data: getMovies } = useGetMoviesQuery(apiParams.apiKey);
+  const { data: getSearchedMovies } = useGetSearchedMoviesQuery(searchedMoviesParams);
+
   useEffect(() => {
-    if (props.searchQuery) {
-      setPopularMovies(null);
-      (async function () {
-        setPopularMovies(
-          await getSearchedMovies(apiParams.searchPath, apiParams.apiKey, props.searchQuery)
-        );
-      })();
-    } else if (props.searchValue) {
-      setPopularMovies(null);
-      (async function () {
-        setPopularMovies(
-          await getSearchedMovies(apiParams.searchPath, apiParams.apiKey, props.searchValue)
-        );
-      })();
+    if (searchQuery) {
+      setPopularMovies(getSearchedMovies);
     } else {
-      setPopularMovies(null);
-      (async function () {
-        setPopularMovies(await getMovies(apiParams.mainPath, apiParams.apiKey));
-      })();
+      setPopularMovies(getMovies);
     }
-  }, [props.searchQuery]);
+  }, [getMovies, getSearchedMovies]);
 
   return popularMovies ? (
     <>
