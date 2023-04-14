@@ -1,9 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { IGetMovies } from '../interfaces';
+import { IGetMovies, IGetMoviesResults } from '../interfaces';
 
 interface IGetMoviesParams {
   apiKey: string;
   searchValue: string;
+}
+
+interface IGetMoviesDetailsParams {
+  apiKey: string;
+  moviesId: number;
 }
 
 export const moviesApi = createApi({
@@ -27,7 +32,15 @@ export const moviesApi = createApi({
         },
       }),
     }),
+    getMoviesDetails: build.query<IGetMoviesResults, IGetMoviesDetailsParams>({
+      query: ({ apiKey, moviesId }) => ({
+        url: `movie/${moviesId}`,
+        params: {
+          api_key: apiKey,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useGetMoviesQuery, useGetSearchedMoviesQuery } = moviesApi;
+export const { useGetMoviesQuery, useGetSearchedMoviesQuery, useGetMoviesDetailsQuery } = moviesApi;
