@@ -6,15 +6,20 @@ import InputSelect from '../UI/InputSelect/InputSelect';
 import InputPoster from '../UI/InputPoster/InputPoster';
 import RadioField from '../RadioField/RadioField';
 import InputAdult from '../UI/InputAdult/InputAdult';
-import { emptyFormState, IForm } from '../../interfaces';
+import { IForm } from '../../interfaces';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { addCard } from '../../store/formSlice';
+import { getFormsImagePath } from '../../utils/utils';
 
-function Form(props: {
-  setFormData: React.Dispatch<React.SetStateAction<IForm>>;
-  lengthArray: number;
-}) {
-  const [data, setData] = useState<IForm>(emptyFormState);
+function Form() {
   const [image, setImage] = useState<FileList | null>(null);
+  const [success, setSuccess] = useState<boolean>(false);
+
+  const cardsArray = useAppSelector((state) => state.forms.formsArray);
+
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
@@ -23,26 +28,25 @@ function Form(props: {
   } = useForm<IForm>();
 
   const onSubmit: SubmitHandler<IForm> = (data) => {
-    setData(data);
+    dispatch(
+      addCard({
+        title: data.title,
+        date: data.date,
+        ganre: data.ganre,
+        image: getFormsImagePath(image),
+        status: data.status,
+        adult: data.adult,
+      })
+    );
   };
 
   useEffect(() => {
-    props.setFormData({
-      title: data.title,
-      date: data.date,
-      ganre: data.ganre,
-      image: image,
-      status: data.status,
-      adult: data.adult,
-    });
-  }, [data]);
-
-  useEffect(() => {
-    if (props.lengthArray > 0) {
-      alert('form submitted successfully');
+    if (cardsArray.length > 0) {
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 1000);
       reset();
     }
-  }, [props.lengthArray]);
+  }, [cardsArray]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -58,6 +62,7 @@ function Form(props: {
         <label htmlFor="input-submit">
           <input type="submit" value="submit" />
         </label>
+        <span className={`success ${success ? 'active' : ''}`}>form submitted successfully!</span>
       </div>
     </form>
   );

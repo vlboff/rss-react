@@ -1,6 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import { App } from './App';
+import { Provider } from 'react-redux';
+import store from './store';
 
 describe('App', () => {
   it('Renders "NotFound" page', () => {
@@ -14,9 +16,11 @@ describe('App', () => {
 
   it('Renders "Forms" page', () => {
     render(
-      <MemoryRouter initialEntries={['/forms']}>
-        <App />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={['/forms']}>
+          <App />
+        </MemoryRouter>
+      </Provider>
     );
     expect(screen.getByLabelText('Title:')).toBeInTheDocument();
   });
@@ -28,5 +32,16 @@ describe('App', () => {
       </MemoryRouter>
     );
     expect(screen.getByTestId('about-us')).toBeInTheDocument();
+  });
+
+  it('Renders "Home" page', () => {
+    render(
+      <Provider store={store}>
+        <MemoryRouter initialEntries={['/']}>
+          <App />
+        </MemoryRouter>
+      </Provider>
+    );
+    expect(screen.getByPlaceholderText('Search on the page')).toBeInTheDocument();
   });
 });

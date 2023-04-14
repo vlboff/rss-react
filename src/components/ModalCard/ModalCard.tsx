@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { getMoviesDetails } from '../../api/getMoviesDetails';
 import { apiParams, IGetMoviesResults } from '../../interfaces';
 import { getGanres, getImage, getMoney, getRuntime } from '../../utils/utils';
 import { ReactComponent as PreloaderIcon } from '../../assets/preload_oval.svg';
 import { ReactComponent as Star } from '../../assets/star.svg';
+import { useGetMoviesDetailsQuery } from '../../store/moviesApi';
 
 function ModalCard(props: {
   active: boolean;
@@ -12,15 +12,23 @@ function ModalCard(props: {
 }) {
   const [moviesDetails, setMoviesDetails] = useState<IGetMoviesResults | null>(null);
 
+  const moviesDetailsParams = {
+    apiKey: apiParams.apiKey,
+    moviesId: props.moviesId,
+  };
+
+  const { data: getMoviesDetails } = useGetMoviesDetailsQuery(moviesDetailsParams, {
+    skip: !moviesDetailsParams.moviesId,
+    refetchOnMountOrArgChange: true,
+  });
+
   useEffect(() => {
-    if (props.moviesId) {
-      (async function () {
-        setMoviesDetails(
-          await getMoviesDetails(apiParams.detailPath, props.moviesId, apiParams.apiKey)
-        );
-      })();
+    if (getMoviesDetails) {
+      setMoviesDetails(getMoviesDetails);
+    } else {
+      setMoviesDetails(null);
     }
-  }, [props.moviesId]);
+  }, [getMoviesDetails]);
 
   useEffect(() => {
     if (props.active === false) {

@@ -2,10 +2,16 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import React from 'react';
 import Form from './Form';
 import userEvent from '@testing-library/user-event';
+import { Provider } from 'react-redux';
+import store from '../../store';
 
 describe('Form', () => {
   it('render inputs', () => {
-    render(<Form setFormData={() => {}} lengthArray={1}></Form>);
+    render(
+      <Provider store={store}>
+        <Form />
+      </Provider>
+    );
     const radioInputs = screen.getAllByRole('radio');
     const checkboxInputs = screen.getAllByRole('checkbox');
     expect(radioInputs).toHaveLength(5);

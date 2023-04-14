@@ -109,6 +109,16 @@ form {
 
   .submit {
     margin: 20px 0;
+    .success {
+      display: none;
+      margin-left: 20px;
+      color: var(--font_color_active);
+    }
+
+    .active {
+      display: inline;
+    }
+
     input {
       width: 100px;
       height: 30px;
@@ -124,3 +134,4 @@ form {
     }
   }
 }
+
