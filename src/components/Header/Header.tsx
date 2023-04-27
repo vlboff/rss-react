@@ -1,6 +1,7 @@
-import { useState } from 'react';
 import HeaderButtom from '../UI/HeaderButtom/HeaderButtom';
 import { pagePath, namePage } from '../../interfaces';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { setActivePage } from '../../store/activePageSlice';
 
 const pagesPathArray = [pagePath.home, pagePath.about, pagePath.forms];
 const pagesArray = [
@@ -10,11 +11,12 @@ const pagesArray = [
 ];
 
 function Header(props: { path: string }) {
-  const [activeMode, setActiveMode] = useState(sessionStorage.getItem('pageName') || namePage.home);
+  const activeMode = useAppSelector((state) => state.activePage.activePage);
+
+  const dispatch = useAppDispatch();
 
   const addActive = (name: string) => {
-    sessionStorage.setItem('pageName', name);
-    setActiveMode(name);
+    dispatch(setActivePage(name));
   };
 
   const pageName = (name: string) => {

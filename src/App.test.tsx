@@ -7,9 +7,11 @@ import store from './store';
 describe('App', () => {
   it('Renders "NotFound" page', () => {
     render(
-      <MemoryRouter initialEntries={['/4']}>
-        <App />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={['/4']}>
+          <App />
+        </MemoryRouter>
+      </Provider>
     );
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('Page not found');
   });
@@ -27,9 +29,11 @@ describe('App', () => {
 
   it('Renders "About us" page', () => {
     render(
-      <MemoryRouter initialEntries={['/about']}>
-        <App />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={['/about']}>
+          <App />
+        </MemoryRouter>
+      </Provider>
     );
     expect(screen.getByTestId('about-us')).toBeInTheDocument();
   });
