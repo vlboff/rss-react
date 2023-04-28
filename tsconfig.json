@@ -20,13 +20,17 @@
     "noEmit": true,
     "noImplicitAny": true,
     "jsx": "react-jsx",
+    "types": [
+      "cypress"
+    ],
     "typeRoots": [
       "./node_modules/@types/"
     ]
   },
   "include": [
     ".eslintrc.cjs",
-    "src"
+    "src",
+    "**/*.ts"
   ],
   "references": [
     {
