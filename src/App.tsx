@@ -1,17 +1,19 @@
-import { HashRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Home from './pages/Home/Home';
 import AboutUs from './pages/AboutUs/AboutUs';
 import Forms from './pages/Forms/Forms';
 import NotFound from './pages/NotFound/NotFound';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from './store/hooks';
+import { setCurrentPath } from './store/currentPathSlice';
 
 export function App() {
-  const [currentPath, setCurrentPath] = useState(sessionStorage.getItem('pagePath') || '#/');
+  const currentPath = useAppSelector((state) => state.currentPath.currentPath);
+
+  const dispatch = useAppDispatch();
 
   const setPath = () => {
-    sessionStorage.setItem('pagePath', location.hash);
-    setCurrentPath(location.hash);
+    dispatch(setCurrentPath(location.hash));
   };
 
   return (
@@ -29,8 +31,8 @@ export function App() {
 
 export function WrappedApp() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <App />
-    </HashRouter>
+    </BrowserRouter>
   );
 }
